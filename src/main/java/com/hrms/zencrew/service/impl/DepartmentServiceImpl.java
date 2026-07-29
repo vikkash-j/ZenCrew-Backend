@@ -63,7 +63,7 @@ public class DepartmentServiceImpl  implements DepartmentService{
 	}
 
 	@Override
-	public DepartmentResponseDto updateDepartmentById(Long id, DepartmentRequestDto dto) {
+	public DepartmentResponseDto updateDepartment(Long id, DepartmentRequestDto dto) {
 		
 		Department department = departmentRepo.findById(id)
 				.orElseThrow(()-> new ResourceNotFoundException("Department not found."));

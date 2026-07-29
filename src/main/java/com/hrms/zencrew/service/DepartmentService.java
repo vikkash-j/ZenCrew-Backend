@@ -13,7 +13,7 @@ public interface DepartmentService {
 	
 	DepartmentResponseDto getDepartmentById(Long id);
 	
-	DepartmentResponseDto updateDepartmentById(Long id, DepartmentRequestDto dto);
+	DepartmentResponseDto updateDepartment(Long id, DepartmentRequestDto dto);
 	
 	void deleteDepartment(Long id);
 	
