@@ -8,6 +8,7 @@ import com.hrms.zencrew.dto.request.EmployeeRequestDto;
 import com.hrms.zencrew.dto.response.EmployeeResponseDto;
 import com.hrms.zencrew.entity.Department;
 import com.hrms.zencrew.entity.Employee;
+import com.hrms.zencrew.exception.DuplicateResourceException;
 import com.hrms.zencrew.exception.ResourceNotFoundException;
 import com.hrms.zencrew.mapper.EmployeeMapper;
 import com.hrms.zencrew.repository.DepartmentRepository;
@@ -37,11 +38,11 @@ public class EmployeeServiceImpl implements EmployeeService{
 	public EmployeeResponseDto createEmployee(EmployeeRequestDto dto) {
 
 		if (employeeRepo.existsByEmail(dto.getEmail())) {
-	        throw new IllegalArgumentException("Email already exists.");
+	        throw new DuplicateResourceException("Email already exists.");
 	    }
 		
 		if(employeeRepo.existsByPhone(dto.getPhone())) {
-			throw new IllegalArgumentException("Phone number already exists.");
+			throw new DuplicateResourceException("Phone number already exists.");
 		}
 		
 		  Department department = departmentRepo.findById(dto.getDepartmentId())
@@ -83,11 +84,11 @@ public class EmployeeServiceImpl implements EmployeeService{
 				.orElseThrow(()-> new ResourceNotFoundException("Employee not found."));
 		
 		if (employeeRepo.existsByEmail(dto.getEmail())) {
-	        throw new IllegalArgumentException("Email already exists.");
+	        throw new DuplicateResourceException("Email already exists.");
 	    }
 		
 		if(employeeRepo.existsByPhone(dto.getPhone())) {
-			throw new IllegalArgumentException("Phone number already exists.");
+			throw new DuplicateResourceException("Phone number already exists.");
 		}
 		
 		Department department = departmentRepo.findById(dto.getDepartmentId())

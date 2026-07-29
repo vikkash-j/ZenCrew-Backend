@@ -11,6 +11,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 import com.hrms.zencrew.dto.request.DepartmentRequestDto;
 import com.hrms.zencrew.dto.response.DepartmentResponseDto;
 import com.hrms.zencrew.entity.Department;
+import com.hrms.zencrew.exception.DuplicateResourceException;
 import com.hrms.zencrew.exception.ResourceNotFoundException;
 import com.hrms.zencrew.mapper.DepartmentMapper;
 import com.hrms.zencrew.repository.DepartmentRepository;
@@ -35,7 +36,7 @@ public class DepartmentServiceImpl  implements DepartmentService{
 	public DepartmentResponseDto createDepartment(DepartmentRequestDto dto) {
 		
 		if(departmentRepo.existsByDepartmentName(dto.getDepartmentName())) {
-			throw new IllegalArgumentException("Department already exists.");
+			throw new DuplicateResourceException("Department already exists.");
 		}
 		
 		Department department = departmentMapper.toEntity(dto);
