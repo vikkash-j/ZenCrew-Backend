@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public class EmployeeRequestDto {
@@ -27,7 +28,7 @@ public class EmployeeRequestDto {
 	@NotBlank
 	private String address;
 	
-	@NotBlank(message = "Department is required")
+	@NotNull(message = "Department is required")
 	private Long departmentId;
 
 	public String getName() {

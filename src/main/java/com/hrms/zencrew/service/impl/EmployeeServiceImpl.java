@@ -83,13 +83,19 @@ public class EmployeeServiceImpl implements EmployeeService{
 		Employee emp = employeeRepo.findById(id)
 				.orElseThrow(()-> new ResourceNotFoundException("Employee not found."));
 		
-		if (employeeRepo.existsByEmail(dto.getEmail())) {
-	        throw new DuplicateResourceException("Email already exists.");
-	    }
+		employeeRepo.findByEmail(dto.getEmail())
+        .ifPresent(existingEmployee -> {
+            if (!existingEmployee.getId().equals(id)) {
+                throw new DuplicateResourceException("Email already exists.");
+            }
+        });
 		
-		if(employeeRepo.existsByPhone(dto.getPhone())) {
-			throw new DuplicateResourceException("Phone number already exists.");
-		}
+		employeeRepo.findByPhone(dto.getPhone())
+        .ifPresent(existingEmployee -> {
+            if (!existingEmployee.getId().equals(id)) {
+                throw new DuplicateResourceException("Phone number already exists.");
+            }
+        });
 		
 		Department department = departmentRepo.findById(dto.getDepartmentId())
 	            .orElseThrow(() ->
