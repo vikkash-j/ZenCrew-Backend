@@ -6,6 +6,8 @@ import org.hibernate.annotations.ManyToAny;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -46,6 +48,15 @@ public class Employee extends BaseEntity{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "department_id", nullable = false )
 	private Department department;
+	
+	@Column(nullable = false)
+	private String password;
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private Role role;
+	
+	
 
 	public String getName() {
 		return name;
@@ -75,6 +86,22 @@ public class Employee extends BaseEntity{
 		return phone;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
@@ -98,11 +125,16 @@ public class Employee extends BaseEntity{
 	@Override
 	public String toString() {
 		return "Employee [name=" + name + ", age=" + age + ", email=" + email + ", phone=" + phone + ", address="
-				+ address + ", department=" + department + "]";
+				+ address + ", department=" + department + ", password=" + password + ", role=" + role + "]";
 	}
 
-	public Employee(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String name, Integer age, String email,
-			String phone, String address, Department department) {
+	public Employee(Long id, LocalDateTime createdAt, LocalDateTime updatedAt,
+			@NotBlank(message = "Employee name is required") String name,
+			@Min(value = 18, message = "Age must be at least 18") @Max(value = 60, message = "Age must be less than or equal to 65") Integer age,
+			@Email(message = "Invalid email format") String email,
+			@Pattern(regexp = "^[6-9]\\d{9}$", message = "Invalid phone number") String phone,
+			@NotBlank(message = "Address is required") String address, Department department, String password,
+			Role role) {
 		super(id, createdAt, updatedAt);
 		this.name = name;
 		this.age = age;
@@ -110,6 +142,8 @@ public class Employee extends BaseEntity{
 		this.phone = phone;
 		this.address = address;
 		this.department = department;
+		this.password = password;
+		this.role = role;
 	}
 
 	public Employee() {
@@ -121,6 +155,8 @@ public class Employee extends BaseEntity{
 		super(id, createdAt, updatedAt);
 		// TODO Auto-generated constructor stub
 	}
+
+	
 	
 	
 }

@@ -1,5 +1,7 @@
 package com.hrms.zencrew.dto.response;
 
+import com.hrms.zencrew.entity.Role;
+
 public class EmployeeResponseDto {
 
 		private  Long id;
@@ -15,6 +17,8 @@ public class EmployeeResponseDto {
 		private String address;
 		
 		private String departmentName;
+		
+		private Role role;
 
 		public Long getId() {
 			return id;
@@ -71,6 +75,40 @@ public class EmployeeResponseDto {
 		public void setDepartmentName(String departmentName) {
 			this.departmentName = departmentName;
 		}
+
+		public Role getRole() {
+			return role;
+		}
+
+		public void setRole(Role role) {
+			this.role = role;
+		}
+
+		@Override
+		public String toString() {
+			return "EmployeeResponseDto [id=" + id + ", name=" + name + ", age=" + age + ", email=" + email + ", phone="
+					+ phone + ", address=" + address + ", departmentName=" + departmentName + ", role=" + role + "]";
+		}
+
+		public EmployeeResponseDto(Long id, String name, Integer age, String email, String phone, String address,
+				String departmentName, Role role) {
+			super();
+			this.id = id;
+			this.name = name;
+			this.age = age;
+			this.email = email;
+			this.phone = phone;
+			this.address = address;
+			this.departmentName = departmentName;
+			this.role = role;
+		}
+
+		public EmployeeResponseDto() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+		
+		
 		
 		
 }

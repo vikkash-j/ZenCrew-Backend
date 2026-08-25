@@ -2,6 +2,7 @@ package com.hrms.zencrew.service.impl;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hrms.zencrew.dto.request.EmployeeRequestDto;
@@ -24,14 +25,17 @@ public class EmployeeServiceImpl implements EmployeeService{
 		private final DepartmentRepository departmentRepo;
 		
 		private final EmployeeMapper employeeMap;
+		
+		private final PasswordEncoder passwordEncoder;
 	
-		
-		
+
 	public EmployeeServiceImpl(EmployeeRepository employeeRepo, DepartmentRepository departmentRepo,
-				EmployeeMapper employeeMap) {
+				EmployeeMapper employeeMap, PasswordEncoder passwordEncoder) {
+			
 			this.employeeRepo = employeeRepo;
 			this.departmentRepo = departmentRepo;
 			this.employeeMap = employeeMap;
+			this.passwordEncoder = passwordEncoder;
 		}
 
 	@Override
@@ -56,6 +60,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 		  emp.setPhone(dto.getPhone());
 		  emp.setAddress(dto.getAddress());
 		  emp.setDepartment(department);
+		  emp.setPassword(passwordEncoder.encode(dto.getPassword()));
+		  emp.setRole(dto.getRole());
 		  
 		  Employee saved = employeeRepo.save(emp);
 		  
@@ -107,6 +113,10 @@ public class EmployeeServiceImpl implements EmployeeService{
 		  emp.setPhone(dto.getPhone());
 		  emp.setAddress(dto.getAddress());
 		  emp.setDepartment(department);
+		  if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+			    emp.setPassword(passwordEncoder.encode(dto.getPassword()));
+			}
+		  emp.setRole(dto.getRole());
 		
 		  Employee updated = employeeRepo.save(emp);
 		

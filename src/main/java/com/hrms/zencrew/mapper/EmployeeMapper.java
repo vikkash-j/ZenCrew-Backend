@@ -18,6 +18,7 @@ public class EmployeeMapper {
 		dto.setEmail(employee.getEmail());
 		dto.setPhone(employee.getPhone());
 		dto.setAddress(employee.getAddress());
+		dto.setRole(employee.getRole());
 		
 		if(employee.getDepartment() != null) {
 			dto.setDepartmentName(employee.getDepartment().getDepartmentName());
