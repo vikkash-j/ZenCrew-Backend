@@ -43,7 +43,7 @@ public class JwtService {
 		return extractAllClaims(token).getSubject();
 	}
 	
-	private boolean isTokenValid(String token, UserDetails userDetails) {
+	public boolean isTokenValid(String token, UserDetails userDetails) {
 		
 		final String email = extractEmail(token);
 		return email.equals(userDetails.getUsername()) && !isTokenExperied(token);		

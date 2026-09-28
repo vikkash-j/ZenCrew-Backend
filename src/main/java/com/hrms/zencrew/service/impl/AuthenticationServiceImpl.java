@@ -5,6 +5,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service;
 
 import com.hrms.zencrew.dto.request.LoginRequestDto;
+import com.hrms.zencrew.dto.response.EmployeeResponseDto;
 import com.hrms.zencrew.dto.response.LoginResponseDto;
 import com.hrms.zencrew.entity.Employee;
 import com.hrms.zencrew.repository.EmployeeRepository;
@@ -38,6 +39,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		String token = jwtService.generateToken(employee);
 
 		return new LoginResponseDto(token, employee.getEmail(), employee.getRole());
+	}
+
+	@Override
+	public EmployeeResponseDto getCurrentEmployee(String email) {
+		Employee employee = employeeRepository.findByEmail(email)
+				.orElseThrow(() -> new RuntimeException("Employee not found"));
+
+		return new EmployeeResponseDto(employee.getId(), employee.getName(), employee.getAge(), employee.getEmail(),
+				employee.getPhone(), employee.getAddress(), employee.getDepartment().getDepartmentName(),
+				employee.getRole());
 	}
 
 }
